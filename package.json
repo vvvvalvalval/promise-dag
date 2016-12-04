@@ -1,0 +1,20 @@
+{
+  "name": "promise-dag",
+  "version": "0.1.0",
+  "description": "declarative promises graphs",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "promise",
+    "async"
+  ],
+  "author": "vvvvalvalval",
+  "license": "MIT",
+  "devDependencies": {
+    "bluebird": "^3.4.6",
+    "lodash": "^4.17.2",
+    "mocha": "^3.2.0"
+  }
+}
