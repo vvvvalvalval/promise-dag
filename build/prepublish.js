@@ -2,6 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 var fs = require('fs-extra')
 var Promise = require('bluebird');
+var _ = require('lodash');
 
 var ensureDir = Promise.promisify(fs.ensureDir);
 var emptyDir = Promise.promisify(fs.emptyDir);
@@ -25,23 +26,29 @@ pDag.run({
   }],
   builtBrowser: ['clean', function () {
     return Promise.all([
+      // source
       p_webpack({
         entry: {
           main: path.join(__dirname, "../index.js")
         },
         output: {
           path: path.join(__dirname, "../js/browser"),
-          filename: "promise-dag.js"
+          filename: "promise-dag.js",
+          libraryTarget: 'umd',
+          library: 'promiseDag'
         }
       }),
+      // minified
       p_webpack({
         entry: {
-          main: path.join(__dirname, "../build/browser.js")
+          main: path.join(__dirname, "../index.js")
         },
         output: {
           path: path.join(__dirname, "../js/browser"),
           sourceMapFilename: "[file].map",
-          filename: "promise-dag.min.js"
+          filename: "promise-dag.min.js",
+          libraryTarget: 'umd',
+          library: 'promiseDag'
         },
         plugins: [new webpack.optimize.UglifyJsPlugin({})],
         devtool: '#source-map'
