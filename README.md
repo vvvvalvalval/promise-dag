@@ -10,7 +10,7 @@ Declarative, modular, minimal-latency asynchronous computations usings graphs of
 * Lightweight (<1k minified and gzipped)
 * *Lazyness:* the only steps which are computed are those you require (and those on which they depend).
 * *Automatic minimum latency:* chaining promises by hand often yields suboptimal performance,
- because some steps are run serially which could be run in parallel. `promise-dag` always chains promises.
+ because some steps are run serially which could be run in parallel. `promise-dag` always chains promises so as to minimize latency.
 
 ## Installation
 
@@ -31,6 +31,7 @@ It exports a global `promiseDag` in `window`.
 
 In environments where this implementation is not available / desirable, you can plug in any other Promise implementation using `promiseDag.implement()`;
 all you have to do is provide the `Promise.resolved()`, `Promise.reject()` and `Promise.all()` functions.
+`promiseDag.implement()` returns a function which has the same behaviour as `promiseDag.run`.
 
 Here are some examples:
 
