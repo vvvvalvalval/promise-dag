@@ -32,11 +32,7 @@ pDag.link({
         output: {
           path: path.join(__dirname, "../js/browser"),
           filename: "promise-dag.js"
-        },
-        module: {
-          loaders: []
-        },
-        plugins: []
+        }
       }),
       p_webpack({
         entry: {
@@ -47,9 +43,6 @@ pDag.link({
           sourceMapFilename: "[file].map",
           filename: "promise-dag.min.js"
         },
-        module: {
-          loaders: []
-        },
         plugins: [new webpack.optimize.UglifyJsPlugin({})],
         devtool: '#source-map'
       })
@@ -59,8 +52,9 @@ pDag.link({
     return 'ok';
   }]
 },['done']).done.then(function () {
-    console.log('done');
+    process.exit(0);
   }, function (err) {
     console.error(err);
+    process.exit(1);
   });
 
