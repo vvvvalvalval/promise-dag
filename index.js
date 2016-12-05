@@ -22,7 +22,7 @@ function allKeys(obj){
  * @returns {Function}
  */
 function implement(Promiz){
-  return function pDag(steps, required) {
+  return function run(steps, required) {
     required = required || allKeys(steps);
 
     var UNVISITED = 0, VISITING = 1, VISITED = 2;
@@ -106,7 +106,7 @@ var es6Factory = {
   }
 };
 
-var link = implement(es6Factory);
+var run = implement(es6Factory);
 
 function source(v){
   return [function () {
@@ -114,6 +114,6 @@ function source(v){
   }];
 }
 
-exports.link = link;
+exports.run = run;
 exports.implement = implement;
 exports.source = source;

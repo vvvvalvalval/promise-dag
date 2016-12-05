@@ -10,7 +10,7 @@ var p_webpack = Promise.promisify(webpack);
 
 var pDag = require('../index.js');
 // using our own lib to build
-pDag.link({
+pDag.run({
   ensureJs: [function () {
     return ensureDir(path.join(__dirname, "../js/"));
   }],

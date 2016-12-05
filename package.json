@@ -1,6 +1,6 @@
 {
   "name": "promise-dag",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "declarative, modular asynchronous computations using Promise graphs. Tiny, portable, dependency-free.",
   "main": "./js/release/promise-dag.js",
   "scripts": {

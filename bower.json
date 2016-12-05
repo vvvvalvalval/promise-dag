@@ -1,0 +1,25 @@
+{
+  "name": "promise-dag",
+  "description": "declarative, modular asynchronous computations using Promise graphs. Tiny, portable, dependency-free.",
+  "main": "./js/browser/promise-dag.js",
+  "authors": [
+    "vvvvalvalval"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "promise",
+    "async",
+    "graph",
+    "dag"
+  ],
+  "homepage": "https://github.com/vvvvalvalval/promise-dag",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ]
+}
