@@ -1,9 +1,10 @@
 {
   "name": "promise-dag",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "declarative promises graphs",
-  "main": "index.js",
+  "main": "./js/release/promise-dag.js",
   "scripts": {
+    "prepublish": "node build/prepublish.js",
     "test": "mocha"
   },
   "keywords": [
@@ -14,7 +15,16 @@
   "license": "MIT",
   "devDependencies": {
     "bluebird": "^3.4.6",
+    "fs-extra": "^1.0.0",
     "lodash": "^4.17.2",
-    "mocha": "^3.2.0"
-  }
+    "mocha": "^3.2.0",
+    "webpack": "^1.13.3"
+  },
+  "readmeFilename": "README.md",
+  "browser": "./js/browser/promise-dag.js",
+  "files": [
+    "js/browser",
+    "js/release",
+    "LICENSE"
+  ]
 }
