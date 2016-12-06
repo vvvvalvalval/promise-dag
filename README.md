@@ -14,6 +14,12 @@ Declarative, modular, minimal-latency asynchronous computations usings graphs of
 
 ## Installation
 
+This library is available on NPM as [`promise-dag`](https://www.npmjs.com/package/promise-dag):
+
+```
+$ npm install promise-dag --save
+```
+
 ### Node / ES6
 
 ```javascript
