@@ -17,12 +17,18 @@ function allKeys(obj){
 }
 
 /**
+ * Given an implementation of Promises, returns a function for running promise-dag graphs, which has the same behaviour as run().
+ *
+ * An implementation consists simply of 3 Promise operations:
+ * - Promise.resolve()
+ * - Promise.reject()
+ * - Promise.all()
  *
  * @param {{resolve: Function, reject: Function, all: Function}} Promiz
  * @returns {Function}
  */
 function implement(Promiz){
-  return function run(steps, required) {
+  function run(steps, required) {
     required = required || allKeys(steps);
 
     var UNVISITED = 0, VISITING = 1, VISITED = 2;
@@ -53,11 +59,14 @@ function implement(Promiz){
 
     function visit(key) {
       var step = steps[key];
+      if(!step){
+        throw new Error("Missing step in graph: [" + key + "]");
+      }
       var p;
       if (flags[key] === VISITED) {
         p = promises[key];
       } else if (flags[key]  === VISITING) {
-        throw new Error("Circular dependency in steps graph.");
+        throw new Error("Circular dependency around step [" + key + "]");
       } else {
         flags[key] = VISITING;
 
@@ -91,7 +100,9 @@ function implement(Promiz){
     }
 
     return ret;
-  };
+  }
+
+  return run;
 }
 
 var es6Factory = {
@@ -106,8 +117,33 @@ var es6Factory = {
   }
 };
 
+/**
+ * Given a data structure which specifies a computation as a DAG of named steps with dependencies,
+ * performs the computation by assembling a matching DAG of Promises,
+ * and returns an object mapping each step name to a Promise of the realized step.
+ *
+ * Optionally, an array of 'output' steps may be specified, in which case:
+ * - only the computations associated to the output steps and their dependencies will be performed
+ * - only the output steps Promises will be present in the returned object.
+ *
+ * A step specification consists of an array of length n+1 (n >= 0), in which:
+ * - the first n elements are the names of the steps on which this step depends (as strings; there may be none of them!)
+ * - the last element is an n-arity function, into which the realized dependencies will be injected,
+ * which should return either the realized value for the current step, or a Promise of that realized value, or throw an Error.
+ *
+ * Note that the graph represented by `steps` may not have circular or missing dependencies.
+ *
+ * @param steps {{}} an object mapping step names to step specifications.
+ * @param {Array.<string>|undefined} required
+ * @returns {{}} an object mapping step names to Promises.
+ */
 var run = implement(es6Factory);
 
+/**
+ * A shorthand for 'constant' step specifications.
+ * @param v {*}
+ * @returns {*[]}
+ */
 function source(v){
   return [function () {
     return v;
