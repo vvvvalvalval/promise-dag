@@ -5,7 +5,7 @@ var bluebird = require('bluebird');
 var pDag = require('../index');
 
 describe('promise-dag', function () {
-  describe('.link()', function () {
+  describe('.run()', function () {
     this.timeout(5000);
 
     var nominalSteps = {
@@ -21,7 +21,7 @@ describe('promise-dag', function () {
     };
 
     it("Nominal case with explicit output", function (done) {
-      var linked = pDag.link(nominalSteps, ['z']);
+      var linked = pDag.run(nominalSteps, ['z']);
       assert(_.isEqual(_.keys(linked).sort(), ['z']));
       linked.z.then(function (z) {
           assert.equal(z, 3);
@@ -30,7 +30,7 @@ describe('promise-dag', function () {
     });
 
     it("Nominal case with no explicit output", function (done) {
-      var linked = pDag.link(nominalSteps);
+      var linked = pDag.run(nominalSteps);
       assert(_.isEqual(_.keys(linked).sort(), ['x','y','z']));
       linked.z.then(function (z) {
           assert.equal(z, 3);
@@ -39,7 +39,7 @@ describe('promise-dag', function () {
     });
 
     it('works on empty graphs', function () {
-      assert(_.isEqual(pDag.link({}), {}));
+      assert(_.isEqual(pDag.run({}), {}));
     });
 
     it("runs all steps if no output steps specified", function (done) {
@@ -65,7 +65,7 @@ describe('promise-dag', function () {
         }]
       };
 
-      pDag.link(steps);
+      pDag.run(steps);
 
       Promise.all(promises.map(_.property('p'))).then(function () {
         done();
@@ -81,7 +81,7 @@ describe('promise-dag', function () {
         return name;
       }
 
-      pDag.link({
+      pDag.run({
         a0: [function () {
           return reportRun('a0');
         }],
