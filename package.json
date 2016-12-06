@@ -1,7 +1,7 @@
 {
   "name": "promise-dag",
   "version": "0.4.1",
-  "description": "declarative, modular asynchronous computations using Promise graphs. Tiny, portable, dependency-free.",
+  "description": "Chain promises declaratively using high-level graphs. Tiny, portable, dependency-free.",
   "main": "./js/release/promise-dag.js",
   "scripts": {
     "prepublish": "node build/prepublish.js",
